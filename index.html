@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <title>Now who's Lewis?</title>
+  <style>
+    :root {
+      --bg: #223;
+      --txt: #eee;
+    }
+    
+    body {
+      margin: 0;
+      font-family: Inter, sans-serif;
+      font-weight: 600;
+      user-select: none;
+      background-color: var(--bg);
+      color: var(--txt);
+    }
+    
+    main {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+    }
+    
+    @keyframes enter {
+      from {scale: 0;}
+      50% {scale: 1.125;}
+    }
+    
+    main div, main hr {
+      position: absolute;
+      animation: 0.2s enter;
+    }
+    
+    main div {
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+    }
+    
+    main hr {
+      border: solid 0.0625rem var(--txt);
+      z-index: 1;
+    }
+    
+    main .lone {
+      font-weight: bold;
+      line-height: 1.5rem;
+      font-size: 1.75rem;
+      z-index: 3;
+    }
+    
+    main .atom {
+      border-radius: 3rem;
+      height: 2rem;
+      width: 2rem;
+      background-color: var(--txt);
+      color: var(--bg);
+      font-size: 1.5rem;
+      z-index: 2;
+      outline: solid 0.25rem var(--bg);
+    }
+    
+    nav {
+      width: 18rem;
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+    }
+    
+    input, button {
+      border: none;
+      font-size: inherit;
+      font-family: inherit;
+      font-weight: inherit;
+      background-color: var(--txt);
+      color: var(--bg);
+      padding: 0.25rem 0.5rem;
+      width: 13.75rem;
+      box-sizing: border-box;
+      margin: 0.25rem 0;
+      border-radius: 0.5rem;
+    }
+    
+    label {
+      display: block;
+      font-size: 0.75rem;
+    }
+    
+    button {
+      cursor: pointer;
+      width: 9rem;
+      margin-left: 0.5rem;
+    }
+    
+    #charge_input {
+      width: 4rem;
+    }
+    
+    input:focus, button:focus {
+      outline: none;
+    }
+    
+    #message_box {
+      z-index: 5;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #title_box {
+      z-index: 5;
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+    
+    .charge {
+      background-color: var(--bg);
+      opacity: 0.333;
+      z-index: 4;
+      width: 1.5rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      border-radius: 1rem;
+    }
+    .charge:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <main></main>
+  <div id="message_box"></div>
+  <div id="title_box"></div>
+  <script src="elementslibrary.js"></script>
+  <script src="script.js"></script>
+  <nav>
+    <label>formula</label>
+    <input id="formula_input" placeholder="CH4" oninput="clear()">
+    <label>charge</label>
+    <input type="number" id="charge_input" placeholder="0" oninput="clear()">
+    <button onclick="parse_and_run(document.querySelector('#formula_input').value, document.querySelector('#charge_input').value)">Generate lewis</button>
+    <script>
+      let c = [
+        ["H2O", 0],
+        ["O3", 0],
+        ["CO2", 0],
+        ["N2", 0],
+        ["CH2O", 0],
+        ["C2H2", 0],
+        ["C2H4", 0],
+        ["C2H6", 0],
+        ["C3H6", 0],
+        ["ClO3", -1],
+        ["N3", -1],
+        ["SO2", 0],
+      ];
+      c = c[Math.floor(Math.random()*c.length)];
+      document.querySelector('#formula_input').value = c[0];
+      document.querySelector('#formula_input').setAttribute("placeholder", c[0]);
+      document.querySelector('#charge_input').value = c[1];
+      document.querySelector('#charge_input').setAttribute("placeholder", c[1]);
+      document.querySelector('button').click();
+      
+      function clear() {
+        console.log("clear");
+        if (document.querySelector("main")) document.querySelector("main").remove();
+        message_box.innerText = "";
+        title_box.innerText = "";
+      }
+    </script>
+  </nav>
+</body>
+</html>
